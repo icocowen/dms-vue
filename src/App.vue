@@ -6,7 +6,7 @@
       <el-header style="padding:0"><TopNav/></el-header>
       <el-container>
         <el-aside width="auto"><LeftNav/></el-aside>
-        <el-main style="background-color:#d9d9d9" ref="card">
+        <el-main style="background-color:#d9d9d9;" :style="hiddenScroll" ref="card">
          
 
         <!-- margin-bottom: 60px; -->
@@ -52,6 +52,14 @@ import { Component, Watch } from 'vue-property-decorator';
 export default class App extends Vue {
 
   
+  public get hiddenScroll() : string {
+    let hidtip = this.$store.state.adaptHeight;
+    if (hidtip['overflow-y'] === 'hidden') {
+      return 'overflow-y:hidden';
+    }
+     return 'overflow-y: auto';
+  }
+  
 
   
   public get pathInfo() : Object[] {
@@ -59,7 +67,8 @@ export default class App extends Vue {
   }
 
   public get adaptHeight(): Object {
-    return this.$store.state.adaptHeight;
+    let originStyle = this.$store.state.adaptHeight;
+    return {'margin-bottom':originStyle['margin-bottom'], 'height': originStyle['height']};
   }
 
 

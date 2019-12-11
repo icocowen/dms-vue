@@ -113,6 +113,7 @@ create table tab_water_rate(
     water_rate int,
     admini_id int(11),
     room_id int(11),
+    is_payment boolean ,
     primary key(id),
     foreign key(admini_id) references tab_administrator (id)
 )engine=innodb;

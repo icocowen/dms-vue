@@ -59,8 +59,8 @@ const routes = [
     name: 'waterraterecord',
     component: WaterRateRecord,
     meta: {
-      title: '记录水费 - 宿舍管理系统',   // 标题设置
-      path: '记录水费'
+      title: '水费记录 - 宿舍管理系统',   // 标题设置
+      path: '水费记录'
     }
   },
   {

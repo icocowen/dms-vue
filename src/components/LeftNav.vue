@@ -27,8 +27,7 @@
           <span slot="title">管理费用</span>
         </template>
         <el-menu-item-group>
-          <el-menu-item index="/waterraterecord">记录水费</el-menu-item>
-          <el-menu-item index="/msgnotify">统计水费</el-menu-item>
+          <el-menu-item index="/waterraterecord">水费记录</el-menu-item>
         </el-menu-item-group>
     </el-submenu>
     <el-submenu index="4">

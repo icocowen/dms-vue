@@ -31,6 +31,7 @@
               style="width: 100%"
               v-loading="loading"
               element-loading-background="#dbdbdbcc"
+              :row-class-name="tableRowClassName"
               >
                <el-table-column
                 type="selection"
@@ -61,6 +62,13 @@
                 label="当月水费 /立方"
                  width="180"
                  sortable
+                >
+              </el-table-column>
+
+              <el-table-column
+                prop="isPayment"
+                label="是否缴清"
+                 width="180"
                 >
               </el-table-column>
 
@@ -117,6 +125,13 @@ export default class WaterRateRecord extends Vue {
      public get getTableAdaptHeight() : number {
         return this.$store.state.windowInnerHeight - 60 - 80 - 42 - 51 - 32 - 10; 
     }
+    private tableRowClassName({row , rowIndex} : any) : string {
+      console.warn(row.isPayment);
+      if(row.isPayment == '否') {
+        return 'warning-row';
+      }
+      return '';
+    }
 
     private input:string = '';
 
@@ -125,37 +140,43 @@ export default class WaterRateRecord extends Vue {
             roomNum : '302',
             date: '2019/12/11 20:46',
             admin: '龙哥',
-            currentWaterRate: '15'
+            currentWaterRate: '15',
+            isPayment : '是'
         },
         {
             roomNum : '303',
             date: '2019/12/11 20:46',
             admin: '龙哥',
-            currentWaterRate: '15'
+            currentWaterRate: '15',
+            isPayment : '否'
         },
         {
             roomNum : '304',
             date: '2019/12/11 20:46',
             admin: '龙哥',
-            currentWaterRate: '15'
+            currentWaterRate: '15',
+            isPayment : '是'
         },
         {
             roomNum : '305',
             date: '2019/12/11 20:46',
             admin: '龙哥',
-            currentWaterRate: '15'
+            currentWaterRate: '15',
+            isPayment : '否'
         },
         {
             roomNum : '306',
             date: '2019/12/11 20:46',
             admin: '龙哥',
-            currentWaterRate: '15'
+            currentWaterRate: '15',
+            isPayment : '是'
         },
         {
             roomNum : '307',
             date: '2019/12/11 20:46',
             admin: '龙哥',
-            currentWaterRate: '15'
+            currentWaterRate: '15',
+            isPayment : '是'
         }
         
         
@@ -165,6 +186,8 @@ export default class WaterRateRecord extends Vue {
 }
 </script>
 
-<style scoped>
-
+<style>
+ .el-table .warning-row {
+    background-color: rgb(253, 226, 226);
+  }
 </style>

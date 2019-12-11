@@ -10,7 +10,8 @@ export default new Vuex.Store({
     pathInfo: [],
     adaptHeight: {
       'margin-bottom': 'auto',
-      'height': '100%'
+      'height': '100%',
+      'overflow-y': 'hidden'
     },
     // treeAdaptHeight: "height:"+(window.innerHeight - 60 - 80 - 51)+"px"
     windowInnerHeight: window.innerHeight
@@ -23,12 +24,14 @@ export default new Vuex.Store({
       if (way === 'abnorm') {
         state.adaptHeight = {
           'margin-bottom': '60px',
-          'height': 'auto'
+          'height': 'auto',
+          'overflow-y': 'auto'
         }
       }else {
         state.adaptHeight = {
           'margin-bottom': 'auto',
-          'height': '100%'
+          'height': '100%',
+          'overflow-y': 'hidden'
         }
       }
     },

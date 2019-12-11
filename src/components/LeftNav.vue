@@ -17,7 +17,7 @@
           <el-menu-item index="/msgnotify">消息通知</el-menu-item>
         </el-menu-item-group>
     </el-submenu>
-    <el-menu-item index="2">
+    <el-menu-item index="/gradedaily">
         <i class="el-icon-s-claim"></i>
         <span slot="title">每日评分</span>
     </el-menu-item>

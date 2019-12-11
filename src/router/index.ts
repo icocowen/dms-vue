@@ -8,6 +8,7 @@ import ChangePassword from "@/components/ChangePassword.vue";
 import PublishBoard from "@/components/PublishBoard.vue";
 import IllegalRecord from "@/components/IllegalRecord.vue";
 import WaterRateRecord from "@/components/WaterRateRecord.vue";
+import GradeDaily from "@/components/GradeDaily.vue";
 
 import store from '@/store'
 
@@ -52,6 +53,15 @@ const routes = [
       title: '个人信息 - 宿舍管理系统',   // 标题设置
       path: '个人信息',
       adapteHeight: 'abnorm' //表示main主体是否适配高度
+    }
+  },
+  {
+    path: '/gradedaily',
+    name: 'gradedaily',
+    component: GradeDaily,
+    meta: {
+      title: '每日评分 - 宿舍管理系统',   // 标题设置
+      path: '每日评分'
     }
   },
   {

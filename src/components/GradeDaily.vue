@@ -1,24 +1,7 @@
 <template>
-  <el-row :gutter="20">
+      <el-row :gutter="20">
       <el-col :span="6">
-          <!-- <div class="outer-box" :style="getTreeAdaptHeight" >
-            <div class='mid-hidden-box' >
-              <div class="scroll-box"  :style="getTreeAdaptHeight" >
-                 <el-tree
-                :data="data"
-                node-key="id"
-                ref="tree"
-                highlight-current
-                :props="defaultProps"
-                :default-expanded-keys="[1]"
-                >
-                </el-tree>
-              </div>
-            </div>
-          </div> -->
-
-          <AdaptHeightTree :height="getTreeHeight" :data='data'/>
-         
+          <AdaptHeightTree :height="getTreeHeight" :data='data' showCheckbox='true'/>
       </el-col>
       
       <el-col :span="18 ">
@@ -37,9 +20,7 @@
             <el-button type="primary" icon="el-icon-search" size="small" circle></el-button>
           </el-col>
 
-          <el-col :span="1">
-            <el-button type="primary" icon="el-icon-plus" size="small" circle></el-button>
-          </el-col>
+        
         </el-row>  
         <el-row style="margin-top: 10px; margin-bottom:10px">
           <!-- 表格 -->
@@ -60,42 +41,41 @@
                 >
               </el-table-column>
               <el-table-column
-                prop="floorAlias"
-                label="位置"
-                width="180"
+                prop="roomName"
+                label="宿舍名"
+                
                 sortable
                 >
               </el-table-column>
-              <el-table-column
-                prop="roomName"
-                label="宿舍名"
-                width="180"
+                <el-table-column
+                prop="floorAlias"
+                label="评分"
+               
                 sortable
                 >
               </el-table-column>
               <el-table-column
                 prop="peopleNum"
-                label="人数"
-                width="180"
-                sortable
+                label="宿管"
+                
                 >
               </el-table-column>
-
-              <el-table-column
-                prop="roomLong"
-                label="宿舍长"
-                >
-              </el-table-column>
-
-            <el-table-column label="操作" fixed='right'>
+            <el-table-column label="操作" fixed='right' width="130">
                   <template slot-scope="scope">
                     <el-button
                       size="mini"
-                      @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+                      @click="handleEdit(scope.$index, scope.row)" 
+                      icon="el-icon-edit" circle title="评分"></el-button>
                     <el-button
-                      size="mini"
-                      type="danger"
-                      @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+                    size="mini"
+                    @click="handleEdit(scope.$index, scope.row)" 
+                    type="warning" plain 
+                      icon="el-icon-info" circle title="详细信息"></el-button>
+                     <el-button
+                    size="mini"
+                    @click="handleEdit(scope.$index, scope.row)" 
+                    type="info" plain 
+                      icon="el-icon-date" circle title="以往记录"></el-button>
                   </template>
               </el-table-column>
 
@@ -121,19 +101,19 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import { Prop, Component } from 'vue-property-decorator';
+
+import Vue from 'vue';
+import { Component } from 'vue-property-decorator';
 import AdaptHeightTree from './AdaptHeightTree.vue'
 
 @Component({
-  components: {
-    AdaptHeightTree
-  }
+    components: {
+        AdaptHeightTree
+    }
 })
-export default class DormSetUp extends Vue {
+export default class GradeDaily extends Vue {
 
-
-      private loading: boolean = true;
+      private loading: boolean = false;
 
       currentPage4 = 4;
 

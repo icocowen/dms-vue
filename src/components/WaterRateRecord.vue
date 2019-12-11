@@ -126,7 +126,7 @@ export default class WaterRateRecord extends Vue {
         return this.$store.state.windowInnerHeight - 60 - 80 - 42 - 51 - 32 - 10; 
     }
     private tableRowClassName({row , rowIndex} : any) : string {
-      console.warn(row.isPayment);
+      // console.warn(row.isPayment);
       if(row.isPayment == '否') {
         return 'warning-row';
       }

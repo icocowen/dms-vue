@@ -117,4 +117,7 @@ export default class MsgTips extends Vue {
         padding: 0 20px;
         overflow-y: auto;
     }
+    .msg-tab {
+        min-width: 300px;
+    }
 </style>

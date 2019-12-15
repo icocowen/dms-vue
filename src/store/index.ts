@@ -14,9 +14,17 @@ export default new Vuex.Store({
       'overflow-y': 'hidden'
     },
     // treeAdaptHeight: "height:"+(window.innerHeight - 60 - 80 - 51)+"px"
-    windowInnerHeight: window.innerHeight
+    windowInnerHeight: window.innerHeight,
+    passwordDialog: false,
+    windowInnerWidth: window.innerWidth
   },
   mutations: {
+    firePasswordDialog(state) {
+      state.passwordDialog = !state.passwordDialog;
+    },
+    fireWindowInnerWidth(state) {
+      state.windowInnerWidth = window.innerWidth
+    },
     fireWindowInnerHeight(state) {
       state.windowInnerHeight =  window.innerHeight;
     },

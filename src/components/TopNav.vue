@@ -18,10 +18,14 @@
          >
         <el-menu-item>
           <!-- <img src="../assets/full.png" alt="全屏" class="screenicon"> -->
-          <img :src="screenIcon" :alt="screenTip"  :title="screenTip" class="screenicon" @click="fireScreenOpe">
+         
+            <img :src="screenIcon" :alt="screenTip"  :title="screenTip" class="screenicon" @click="fireScreenOpe">
+         
         </el-menu-item>
         <el-menu-item >
-          <i class="el-icon-bell" style="color:white" @click="fireShowMsgTips" title="消息"></i>
+           <el-badge is-dot class="tips-red-ptr">
+              <i class="el-icon-bell" style="color:white" @click="fireShowMsgTips" title="消息"></i>
+           </el-badge>
         </el-menu-item>
         <el-submenu index="3">
 
@@ -30,7 +34,7 @@
               <span class="alias" style="margin: 0 5px; color:white">张德帅</span>
           </template>
           <el-menu-item index="/profile">个人信息</el-menu-item>
-          <el-menu-item>更改密码</el-menu-item>
+          <el-menu-item @click="showPasswordDialog" >更改密码</el-menu-item>
           <el-menu-item>退出</el-menu-item>
                 
                   
@@ -52,6 +56,7 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
   name: 'TopNav'
 })
 export default class TopNav extends Vue {
+  
     private appName:String = '';
     private screenIcon:String = require('../assets/full.png');
     private screenTip:String = '全屏';
@@ -59,7 +64,14 @@ export default class TopNav extends Vue {
       width: '64px'
     }
     private icon:String = 'el-icon-s-unfold';
-    activeIndex:String =  '1'
+    activeIndex:String =  '1';
+
+
+    private showPasswordDialog() {
+      this.$store.commit('firePasswordDialog');
+    }
+
+
 
     fireShowMsgTips() {
       this.$store.commit('fireMsgTips');
@@ -126,4 +138,5 @@ export default class TopNav extends Vue {
     height: 28px;
     margin: 17px;
   }
+ 
 </style>

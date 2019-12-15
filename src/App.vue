@@ -23,7 +23,7 @@
         </el-card>
 
           <MsgTips/>
-          <!-- <ChangePassword :dialogVisible='true'/> -->
+          <ChangePassword :visiable='launchShowVisiable'/>
         </el-main>
       </el-container>
     </el-container>
@@ -36,7 +36,7 @@ import TopNav from './components/TopNav.vue';
 import LeftNav from './components/LeftNav.vue';
 import  MsgTips  from "./components/MsgTips.vue";
 import  PathShow  from "./components/PathShow.vue";
-// import ChangePassword from "@/components/ChangePassword.vue";
+import ChangePassword from "@/components/ChangePassword.vue";
 import { Component, Watch } from 'vue-property-decorator';
 
 
@@ -46,10 +46,16 @@ import { Component, Watch } from 'vue-property-decorator';
     LeftNav,
     MsgTips,
     PathShow,
-    // ChangePassword
+    ChangePassword
   }
 })
 export default class App extends Vue {
+
+    get launchShowVisiable(): boolean {
+      return this.$store.state.passwordDialog;
+    }
+
+  
 
   
   public get hiddenScroll() : string {
@@ -74,21 +80,18 @@ export default class App extends Vue {
 
   mounted() {
      const that = this;
-     this.debounce(() => {
-       that.$store.commit('fireWindowInnerHeight');
-     },200);
-  }
 
-  // 可以提取为工具类
-  debounce(callback:Function, time: number) {
       let resizeTimer:any = null;
      window.onresize= () => {
        if(resizeTimer) clearTimeout(resizeTimer);  
         resizeTimer = setTimeout(function(){
-            callback();
-        },time);  
+            that.$store.commit('fireWindowInnerHeight');
+             that.$store.commit('fireWindowInnerWidth');
+        },200);  
      }
   }
+
+
 
 
 
@@ -189,6 +192,11 @@ export default class App extends Vue {
   }
 }
 
+
+.tips-red-ptr .el-badge__content.is-fixed {
+   top: 22px ;
+   right: 16px !important;
+ }
 
 
 </style>

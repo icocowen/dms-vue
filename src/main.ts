@@ -7,10 +7,11 @@ import './assets/element-theme/index.css';
 import VueWechatTitle from 'vue-wechat-title';
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import Echarts from 'echarts';
 
 
 
- 
+Vue.prototype.$echarts = Echarts;
 Vue.use(VueAxios, axios)
 
 Vue.use(VueWechatTitle)

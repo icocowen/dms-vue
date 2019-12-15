@@ -24,7 +24,7 @@ const routes = [
     meta: {
       title: '首页 - 宿舍管理系统',   // 标题设置
       path: '首页',
-      adapteHeight: 'abnorm'
+      adapteHeight: 'abnorm' //表示main主体是否适配高度
     }
   },
   {
@@ -51,8 +51,7 @@ const routes = [
     component: PersonProfile,
     meta: {
       title: '个人信息 - 宿舍管理系统',   // 标题设置
-      path: '个人信息',
-      adapteHeight: 'abnorm' //表示main主体是否适配高度
+      path: '个人信息'
     }
   },
   {

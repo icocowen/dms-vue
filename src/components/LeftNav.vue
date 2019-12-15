@@ -14,7 +14,6 @@
         </template>
         <el-menu-item-group>
           <el-menu-item index="/">统计报表</el-menu-item>
-          <el-menu-item index="/msgnotify">消息通知</el-menu-item>
         </el-menu-item-group>
     </el-submenu>
     <el-menu-item index="/gradedaily">

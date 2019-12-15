@@ -1,84 +1,20 @@
 <template>
   <div id="app">
-    <!-- <router-view/> -->
+    <transition name="index-anima" mode="out-in">
+      <router-view v-wechat-title='$route.meta.title' />
+    </transition>
     
-    <el-container>
-      <el-header style="padding:0"><TopNav/></el-header>
-      <el-container>
-        <el-aside width="auto"><LeftNav/></el-aside>
-        <el-main style="background-color:#d9d9d9;" :style="hiddenScroll" ref="card">
-         
-
-        <!-- margin-bottom: 60px; -->
-
-        <el-card class="box-card" :style="adaptHeight" >
-          <div slot="header" class="clearfix">
-            <PathShow :pathInfo="pathInfo"/>
-          </div>
-          <div>
-              <transition name="fade" mode="out-in"> 
-                <router-view v-wechat-title='$route.meta.title' class="position"/>
-              </transition>
-          </div>
-        </el-card>
-
-          <MsgTips/>
-          <ChangePassword :visiable='launchShowVisiable'/>
-        </el-main>
-      </el-container>
-    </el-container>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
-import TopNav from './components/TopNav.vue';
-import LeftNav from './components/LeftNav.vue';
-import  MsgTips  from "./components/MsgTips.vue";
-import  PathShow  from "./components/PathShow.vue";
-import ChangePassword from "@/components/ChangePassword.vue";
-import { Component, Watch } from 'vue-property-decorator';
+import { Component } from 'vue-property-decorator';
 
 
-@Component({
-  components: {
-    TopNav,
-    LeftNav,
-    MsgTips,
-    PathShow,
-    ChangePassword
-  }
-})
+@Component({})
 export default class App extends Vue {
-
-    get launchShowVisiable(): boolean {
-      return this.$store.state.passwordDialog;
-    }
-
-  
-
-  
-  public get hiddenScroll() : string {
-    let hidtip = this.$store.state.adaptHeight;
-    if (hidtip['overflow-y'] === 'hidden') {
-      return 'overflow-y:hidden';
-    }
-     return 'overflow-y: auto';
-  }
-  
-
-  
-  public get pathInfo() : Object[] {
-    return this.$store.state.pathInfo;
-  }
-
-  public get adaptHeight(): Object {
-    let originStyle = this.$store.state.adaptHeight;
-    return {'margin-bottom':originStyle['margin-bottom'], 'height': originStyle['height']};
-  }
-
-
-  mounted() {
+    mounted() {
      const that = this;
 
       let resizeTimer:any = null;
@@ -90,29 +26,76 @@ export default class App extends Vue {
         },200);  
      }
   }
-
-
-
-
-
-
-  
-  
-  // [
-  //                     {
-  //                     path:'首页',
-  //                     to:'/'
-  //                     },
-  //                     {
-  //                     path:'统计报表',
-  //                     to:'/msgnotify'
-  //                     }
-  //                     ];  pathInfo
 }
 </script>
-
 <style>
-  .position{
+
+  .index-anima-enter-active {
+     -webkit-animation-name: lightSpeedIn;
+    animation-name: lightSpeedIn;
+    -webkit-animation-timing-function: ease-out;
+    animation-timing-function: ease-out;
+    -webkit-animation-duration: .3s;
+    animation-duration: .3s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+  }
+  .index-anima-leave-active {
+     -webkit-animation-name: lightSpeedOut;
+  animation-name: lightSpeedOut;
+  -webkit-animation-timing-function: ease-in;
+  animation-timing-function: ease-in;
+    -webkit-animation-duration: .2s;
+    animation-duration: .2s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+  }
+
+
+  
+@keyframes lightSpeedIn {
+  from {
+    -webkit-transform: translate3d(100%, 0, 0) skewX(-30deg);
+    transform: translate3d(100%, 0, 0) skewX(-30deg);
+    opacity: 0;
+  }
+
+  60% {
+    -webkit-transform: skewX(20deg);
+    transform: skewX(20deg);
+    opacity: 1;
+  }
+
+  80% {
+    -webkit-transform: skewX(-5deg);
+    transform: skewX(-5deg);
+  }
+
+  to {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+
+
+
+
+
+
+  @keyframes lightSpeedOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    -webkit-transform: translate3d(100%, 0, 0) skewX(30deg);
+    transform: translate3d(100%, 0, 0) skewX(30deg);
+    opacity: 0;
+  }
+}
+
+.position{
     position:absolute;
     left:0;
     right:0;
@@ -134,69 +117,4 @@ export default class App extends Vue {
   body {
     overflow: hidden;
   }
-  a {
-    text-decoration: none;
-  }
-  a:active {
-    color: black;
-  }
-  a:visited {
-    color: #655c57;
-  }
-
-
-  
-  .fade-enter-active {
-    -webkit-animation-name: slideInRight;
-    animation-name: slideInRight;
-    -webkit-animation-duration: .3s;
-    animation-duration: .3s;
-    -webkit-animation-fill-mode: both;
-    animation-fill-mode: both;
-  }
-  .fade-leave-active {
-    -webkit-animation-name: slideOutLeft;
-    animation-name: slideOutLeft;
-    -webkit-animation-duration: .3s;
-    animation-duration: .3s;
-    -webkit-animation-fill-mode: both;
-    animation-fill-mode: both;
-  }
-
-@keyframes slideOutLeft {
-  from {
-    -webkit-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
-  }
-
-  to {
-    visibility: hidden;
-    -webkit-transform: translate3d(-100%, 0, 0);
-    transform: translate3d(-100%, 0, 0);
-  }
-}
-
-
- 
-
-@keyframes slideInRight {
-  from {
-    -webkit-transform: translate3d(100%, 0, 0);
-    transform: translate3d(100%, 0, 0);
-    visibility: visible;
-  }
-
-  to {
-    -webkit-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
-  }
-}
-
-
-.tips-red-ptr .el-badge__content.is-fixed {
-   top: 22px ;
-   right: 16px !important;
- }
-
-
 </style>

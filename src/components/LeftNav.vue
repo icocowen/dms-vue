@@ -7,26 +7,26 @@
     :router='true'
     :unique-opened='true'
     >
-    <el-submenu index="1">
+    <el-submenu index="1" >
         <template slot="title">
           <i class="el-icon-s-home"></i>
           <span slot="title">主控面板</span>
         </template>
         <el-menu-item-group>
-          <el-menu-item index="/">统计报表</el-menu-item>
+          <el-menu-item index="statisticsreport">统计报表</el-menu-item>
         </el-menu-item-group>
     </el-submenu>
-    <el-menu-item index="/gradedaily">
+    <el-menu-item index="gradedaily">
         <i class="el-icon-s-claim"></i>
         <span slot="title">每日评分</span>
     </el-menu-item>
-    <el-submenu index="3" >
+    <el-submenu  index="3" >
          <template slot="title">
           <i class="el-icon-money"></i>
           <span slot="title">管理费用</span>
         </template>
         <el-menu-item-group>
-          <el-menu-item index="/waterraterecord">水费记录</el-menu-item>
+          <el-menu-item index="waterraterecord">水费记录</el-menu-item>
         </el-menu-item-group>
     </el-submenu>
     <el-submenu index="4">
@@ -35,13 +35,13 @@
           <span slot="title">其他功能</span>
         </template>
         <el-menu-item-group>
-          <el-menu-item index="/publishboard">公示板</el-menu-item>
-          <el-menu-item index="/illegalrecord">违纪登记</el-menu-item>
+          <el-menu-item index="publishboard">公示板</el-menu-item>
+          <el-menu-item index="illegalrecord">违纪登记</el-menu-item>
         </el-menu-item-group>
     </el-submenu>
 
 
-     <el-menu-item index="/dormsetup">
+     <el-menu-item index="dormsetup">
         <i class="el-icon-s-tools"></i>
         <span slot="title">公寓设置</span>
     </el-menu-item>

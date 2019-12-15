@@ -33,7 +33,7 @@
              <el-avatar :size="28" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
               <span class="alias" style="margin: 0 5px; color:white">张德帅</span>
           </template>
-          <el-menu-item index="/profile">个人信息</el-menu-item>
+          <el-menu-item index="profile">个人信息</el-menu-item>
           <el-menu-item @click="showPasswordDialog" >更改密码</el-menu-item>
           <el-menu-item>退出</el-menu-item>
                 

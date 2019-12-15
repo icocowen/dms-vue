@@ -27,6 +27,7 @@ Vue.use(VueRouter)
 
 import Home from '@/views/Home.vue';
 import Login from '@/views/Login.vue';
+import Page404 from '@/views/404.vue';
 // import Management from '@/views/Management.vue';
 
 const routes = [
@@ -135,6 +136,11 @@ const routes = [
         }
       }
     ]
+  },
+  {
+    path: '*',
+    name: '404',
+    component: Page404
   }
 ]
   // {

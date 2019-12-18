@@ -31,7 +31,9 @@ create table tab_administrator(
     phone_num varchar(11),
     `password` varchar(200) not null,
     room_no varchar(10),
+	salt  varchar(50),
     gender boolean not null,
+    avatar varchar(200), #路径
     primary key(`id`),
     unique key(`job_num`)
 )engine=InnoDb;
@@ -151,4 +153,8 @@ create table tab_illegal_record(
     foreign key(admini_id) references tab_administrator (id)
 )engine=innodb;
 
-insert into tab_root(username, password) values('root', '9f909bd7fbc0e71595772c22c97db5677c25acb5a938e88a181825a95e954e879a60bf42a202577e1cc78d0da6882f2135f0621479f96150b0da43774022ff53');
+
+
+-- 1	iwen	123456	eq	{bcrypt}$2a$10$AUkgFJOrql.8k25wSCnkZe6wEITaYGX5fgLBqinTiFscDRnYgnkeq	32	$2a$20$wj6t5VIhVOS94MX00EfyRO	1
+insert into tab_call_board values(null, now(),now(),'123456','{"title":"国庆快乐","content": "祝大家节日快乐"}');
+insert into tab_administrator values(null, '张德帅','123456',	'15119306876','{bcrypt}$2a$10$AUkgFJOrql.8k25wSCnkZe6wEITaYGX5fgLBqinTiFscDRnYgnkeq','720','33',1,'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png');

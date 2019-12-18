@@ -5,7 +5,7 @@
     <el-container>
       <el-header style="padding:0"><TopNav/></el-header>
       <el-container>
-        <el-aside width="auto"><LeftNav/></el-aside>
+        <el-aside width="auto"><LeftNav /></el-aside>
         <el-main style="background-color:#d9d9d9;" :style="hiddenScroll" ref="card">
          
 
@@ -56,17 +56,23 @@ export default class Management extends Vue {
       return this.$store.state.passwordDialog;
     }
 
+
+
   
 
   
   public get hiddenScroll() : string {
     let hidtip = this.$store.state.adaptHeight;
-    console.warn(hidtip);
+    // console.warn(hidtip);
     if (hidtip['overflow-y'] === 'hidden') {
       return 'overflow-y:hidden';
     }
      return 'overflow-y: auto';
   }
+
+
+
+
   
 
   
@@ -79,26 +85,7 @@ export default class Management extends Vue {
     return {'margin-bottom':originStyle['margin-bottom'], 'height': originStyle['height']};
   }
 
-
-
-
-
-
-
-
-
   
-  
-  // [
-  //                     {
-  //                     path:'首页',
-  //                     to:'/'
-  //                     },
-  //                     {
-  //                     path:'统计报表',
-  //                     to:'/msgnotify'
-  //                     }
-  //                     ];  pathInfo
 }
 </script>
 

@@ -7,36 +7,45 @@
             <el-upload
               :limit="1"
               accept=".png,.jpg"
+              action="/api/user/avatar"
+              name="avatar"
+              :headers="headers"
+              :on-success="uploadsuc"
+              :on-error="handleError"
+              :show-file-list='false'
               >
-                <el-avatar class="upload-shadow" :size="100" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"> </el-avatar>
+                <el-avatar class="upload-shadow" :size="100" :src="form.avatar"> </el-avatar>
               </el-upload>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="24" class="prop-center">
-            <span>张德帅</span>
+            <span>{{info.name}}</span>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="24" class="prop-center">
-            <span style="font-size: .8em; color: gray;">超级管理员</span>
+            <span style="font-size: .8em; color: gray;">管理员</span>
           </el-col>
         </el-row>
         <el-row class="info">
           <el-col :span="24"> 
             <el-row :gutter="10">
               <el-col :span="2"><i class="el-icon-s-custom"></i></el-col>
-              <el-col :span="22">17231503152</el-col>
+              <el-col :span="22">{{info.jobNum}}</el-col>
             </el-row>
 
           <el-row :gutter="10">
               <el-col :span="2"><i class="el-icon-phone"></i></el-col>
-              <el-col :span="22">15619332885</el-col>
+              <el-col :span="22">{{info.phoneNum}}</el-col>
             </el-row>
 
             <el-row :gutter="10" >
               <el-col :span="2"><i class="el-icon-user-solid"></i></el-col>
-              <el-col :span="22" style="color:#409eff "><i class="el-icon-male"></i></el-col>
+              <el-col :span="22" >
+                <i v-if="info.gender == 'male'" style="color:#409eff " class="el-icon-male"></i>
+                <i v-if="info.gender == 'female'" style="color:#f33d91 " class="el-icon-female"></i>
+              </el-col>
             </el-row>
             <el-divider></el-divider>
             <el-row>
@@ -44,7 +53,7 @@
                 <i class="el-icon-coordinate"></i>
               </el-col>
               <el-col :span='22'>
-                402房
+                {{info.roomNo}} 房
               </el-col>
             </el-row>
           </el-col>
@@ -69,18 +78,18 @@
               </el-radio-group>
           </el-form-item>
           <el-form-item label="工号">
-            <el-input v-model="form.workId" :disabled="true"></el-input>
+            <el-input v-model="form.jobNum" :disabled="true"></el-input>
           </el-form-item>
           <el-form-item label="电话">
               <el-input v-model="form.phoneNum"></el-input>
           </el-form-item>
           <el-form-item label="房间">
-            <el-input v-model="form.roomNum">
+            <el-input v-model="form.roomNo">
               <template slot="append">房</template>
             </el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" size="small">更新基本信息</el-button>
+            <el-button type="primary" size="small" @click="onSubmit">更新基本信息</el-button>
           </el-form-item>
         </el-form>
     </el-col>
@@ -96,20 +105,112 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { Component } from 'vue-property-decorator';
+import { Component, Watch } from 'vue-property-decorator';
 
 @Component
 export default class PersonProfile extends Vue {
-   private form:{} =  {
-          name: '张德帅',
-          gender: 'male',
-          workId: '17231503152',
-          phoneNum: '15619332885',
-          roomNum: '402'
+   private form:any =  {
+          name: '',
+          gender: '',
+          jobNum: '',
+          phoneNum: '',
+          roomNo: ''
         };
+   private info : any = {
+          name: '',
+          gender: '',
+          jobNum: '',
+          phoneNum: '',
+          roomNo: ''
+   };
+
      onSubmit() {
-        console.log('submit!');
+        let data = this.form;
+        data.fn = 'all';
+        this.updateUserInfo(data);
     }
+
+    private headers = {"authorization":this.$store.state.token};
+
+    uploadsuc(response:any, file:any, fileList:any) {
+      
+      this.$set(this.form,'avatar', response);
+      this.$store.commit('fireUploadAvatarEvent', null);
+      this.$notify({
+              title: '更新操作',
+              message: '更新头像成功',
+              type: 'success',
+              duration: 3000
+            });
+    }
+
+    handleError(err:any, file:any, fileList:any) {
+      if(err.status === '401') {
+         this.$message({
+            type: 'warning',
+            message: '身份的过期，请重新登录!'
+          });
+        this.$router.replace({
+          path:'/m'
+        });
+      }
+    }
+
+
+     updateUserInfo(data: any) {
+        this.axios.put('/user', data).then((response) => {
+            this.getBriefUserInfo(true, this.setUserInfo);
+            this.$notify({
+              title: '更新操作',
+              message: '更新个人信息成功',
+              type: 'success',
+              duration: 3000
+            });
+        }).catch((error)=>{
+            this.$notify({
+              title: '更新操作',
+              message: '更新个人信息失败',
+              type: 'warning',
+              duration: 3000
+            });
+        });
+   }
+
+    created() {
+      this.getBriefUserInfo(true, this.setUserInfo);
+      
+    }
+
+    setUserInfo(response:any) {
+      this.form = response.data;
+
+      this.$set(this.info, 'name', this.form.name);
+      this.$set(this.info, 'jobNum', this.form.jobNum);
+      this.$set(this.info, 'phoneNum', this.form.phoneNum);
+      this.$set(this.info, 'gender', this.form.gender);
+      this.$set(this.info, 'roomNo', this.form.roomNo);
+    }
+
+    
+    getBriefUserInfo(detail: boolean, callbak: Function):any {
+      let date = null;
+      this.axios.get('/user', {params: {
+        detail: detail
+      }})
+      .then((response) => {
+          
+            
+              callbak(response);
+            
+        
+      });
+
+      
+    }
+
+
+
+    
 }
 </script>
 

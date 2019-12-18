@@ -30,12 +30,12 @@
         <el-submenu index="3">
 
           <template slot="title">
-             <el-avatar :size="28" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
-              <span class="alias" style="margin: 0 5px; color:white">张德帅</span>
+             <el-avatar :size="28" :src="user.avatar"></el-avatar>
+              <span class="alias" style="margin: 0 5px; color:white"> {{user.name}} </span>
           </template>
           <el-menu-item index="profile">个人信息</el-menu-item>
           <el-menu-item @click="showPasswordDialog" >更改密码</el-menu-item>
-          <el-menu-item>退出</el-menu-item>
+          <el-menu-item @click="handleLogout">退出</el-menu-item>
                 
                   
 
@@ -50,12 +50,50 @@
 
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Prop, Vue ,Watch} from 'vue-property-decorator';
 
 @Component({
   name: 'TopNav'
 })
 export default class TopNav extends Vue {
+
+   
+
+    user : any = {};
+
+    created() {
+      this.getBriefUserInfo(false,this.setBriefVal) ;
+     
+    }
+
+
+    setBriefVal(response:any){
+      this.$set(this.user, "avatar", response.data.avatar);
+      this.$set(this.user, "name", response.data.name);
+      // console.warn(response);
+    }
+
+
+   @Watch('$store.state.uploadAvatarEvent')
+   private updateAvatar() {
+      this.getBriefUserInfo(false,this.setBriefVal) ;
+   }
+
+    getBriefUserInfo(detail: boolean, callbak: Function):any {
+      let date = null;
+      this.axios.get('/user', {params: {
+        detail: detail
+      }})
+      .then((response) => {
+          
+            
+              callbak(response);
+            
+        
+      });
+
+      
+    }
   
     private appName:String = '';
     private screenIcon:String = require('../assets/full.png');
@@ -69,6 +107,32 @@ export default class TopNav extends Vue {
 
     private showPasswordDialog() {
       this.$store.commit('firePasswordDialog');
+    }
+
+
+    private handleLogout() {
+
+      this.$confirm('是否退出登录?', '退出提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          
+          this.logout();
+          this.$message({
+            type: 'success',
+            message: '退出成功!'
+          });
+          this.$router.replace({
+            path: '/'
+          });
+        })
+    }
+
+
+    logout() {
+      this.$store.commit('fireRemoveToken');
+      this.axios.get('/logout');
     }
 
 

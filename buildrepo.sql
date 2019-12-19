@@ -96,6 +96,9 @@ create table tab_student(
     unique key(stu_num)
 )engine=Innodb;
 
+insert into tab_student values(null, '17231503152', '720', '苟三', true, '15119306876','计算机三班','眉头','4');
+
+
 #admini_id int(11),是本次的登记人
 create table tab_gradle(
     id int(11) not null AUTO_INCREMENT,
@@ -152,6 +155,9 @@ create table tab_illegal_record(
     primary key(id),
     foreign key(admini_id) references tab_administrator (id)
 )engine=innodb;
+
+
+insert into tab_illegal_record values(null, now(), 1, '迟到违规', 17231503152);
 
 
 

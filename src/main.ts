@@ -13,6 +13,12 @@ import Echarts from 'echarts';
 
 Vue.prototype.$echarts = Echarts;
 
+Vue.use(VueWechatTitle)
+
+Vue.use(ElementUI);
+
+Vue.config.productionTip = false
+
 /* 创建axios实例 */
 const service = axios.create({
   baseURL: "/api", //** 基础地址 要请求的url前缀  
@@ -40,13 +46,30 @@ err => {
 
 service.interceptors.response.use(
   response => {
+      let nt = response.headers.authorization;
+
+      let old = store.state.token;
+
+      //reflash token 
+      if (old !== undefined && old !== null) {
+        if (nt !== undefined && nt !== null) {
+          if (nt !== old) {
+            store.commit('fireSaveToken', nt);
+          }
+        }
+      }
+
       return response;
   },
   error => {
       if (error.response) {
+        console.warn(error.response.headers.authorization);
+        
           switch (error.response.status) {
               case 401:
-                  // 这里写清除token的代码
+                 
+                  store.commit('fireRemoveToken');
+                  ElementUI.Message.error('令牌已经过期，请重新登录！');
                   router.replace({
                       path: '/login'
                   })
@@ -59,11 +82,7 @@ service.interceptors.response.use(
 
 Vue.use(VueAxios, service)
 
-Vue.use(VueWechatTitle)
 
-Vue.use(ElementUI);
-
-Vue.config.productionTip = false
 
 
 

@@ -5,18 +5,18 @@
             <div class='mid-hidden-box' >
               <div class="scroll-box"  :style="getTimeLineAdaptHeight" >
                 
-                <el-timeline>
+                <el-timeline :reverse="true">
                 
                 <transition-group name="remove" mode="in-out"> 
                 <el-timeline-item 
                 v-for="(item ) in boards.data"
                 :key="item.id"
-                :timestamp="item.inDate" placement="top">
+                :timestamp="item.showDate" placement="top">
                
 
                 <el-card class="publish-item ">
                   <div slot="header" class="clearfix">
-                    <span>{{boards.name}} 公告于 {{item.showDate}}</span>
+                    <span>{{boards.name}} 公告于 {{item.inDate}}</span>
                     <!-- 能够删除未发布的公告  发布时间 大于当前时间则出现删除按钮 -->
                     <el-button @click="handleRemoveBoard(item.id)" v-if="new Date().getTime() < new Date(item.showDate).getTime()" style="float: right;" type="danger" icon="el-icon-delete" size="mini" circle></el-button>
                   </div>

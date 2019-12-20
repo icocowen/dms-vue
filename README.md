@@ -30,7 +30,7 @@ if (to.meta.requiresAuth) {
 ![图片]()
 
 * 个人信息页
-![图片]()
+![图片](https://github.com/icocowen/dms-vue/blob/master/doc/img/%E4%B8%AA%E4%BA%BA%E4%BF%A1%E6%81%AF%E9%A1%B5.jpg)
 
 * 统计报表页
 ![图片]()

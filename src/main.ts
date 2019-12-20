@@ -51,6 +51,7 @@ service.interceptors.response.use(
       let old = store.state.token;
 
       //reflash token 
+      // console.warn(nt);
       if (old !== undefined && old !== null) {
         if (nt !== undefined && nt !== null) {
           if (nt !== old) {
@@ -63,16 +64,18 @@ service.interceptors.response.use(
   },
   error => {
       if (error.response) {
-        console.warn(error.response.headers.authorization);
+        console.warn(error.response);
         
           switch (error.response.status) {
               case 401:
+                  if (error.response.config.url.replace("/api","") !== '/login') {
+                    store.commit('fireRemoveToken');
+                    ElementUI.Message.error('令牌已经过期，请重新登录！');
+                    router.replace({
+                        path: '/login'
+                    })
+                  }
                  
-                  store.commit('fireRemoveToken');
-                  ElementUI.Message.error('令牌已经过期，请重新登录！');
-                  router.replace({
-                      path: '/login'
-                  })
           }
       }
       return Promise.reject(error);

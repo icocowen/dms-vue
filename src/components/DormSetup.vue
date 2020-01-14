@@ -24,6 +24,11 @@
           @confirmActive="confirmActive()"
           :dialogNotVisible='dialogNotVisible'
           />
+          <EditRoomInfo
+           title="修改宿舍信息" 
+          :editRoomDialogVisible='editRoomDialogVisible' 
+          @saveRoomInfo="saveRoomInfo()"
+          />
          
          
       </el-col>
@@ -36,12 +41,12 @@
               size="small"
               placeholder="搜索房间"
               prefix-icon="el-icon-search"
-              v-model="input">
+              v-model="searchText">
             </el-input>
 
           </el-col>
           <el-col :span="1">
-            <el-button type="primary" icon="el-icon-search" size="small" circle></el-button>
+            <el-button type="primary" icon="el-icon-search" size="small" circle @click="handleSearch()"></el-button>
           </el-col>
 
           <el-col :span="1">
@@ -98,6 +103,7 @@
                   <template>
                     <el-button
                       size="mini"
+                      @click="handleEditRoom()"
                      >编辑</el-button>
                     <el-button
                       size="mini"
@@ -131,23 +137,31 @@ import Vue from 'vue'
 import { Prop, Component } from 'vue-property-decorator';
 import AdaptHeightTree from './AdaptHeightTree.vue'
 import DormSetupDialog from './DormSetupDialog.vue'
+import EditRoomInfo from './EditRoomInfo.vue'
 
 @Component({
   components: {
     AdaptHeightTree,
-    DormSetupDialog
+    DormSetupDialog,
+    EditRoomInfo
   }
 })
 export default class DormSetUp extends Vue {
 
       dialogVisible:any = 1;
+      editRoomDialogVisible:any = 1;
       title: String = "操作提示";
       private loading: boolean = false;
       dialogNotVisible:any = 2;
+      editRoomDialogNotVisible:any = 2;
 
       currentPage4 = 4;
 
-      private input ='';
+      private searchText ='';
+
+      handleEditRoom() {
+        this.editRoomDialogVisible = -this.editRoomDialogVisible;
+      }
 
       showDialog() {
         this.title = '增加房间';
@@ -170,10 +184,24 @@ export default class DormSetUp extends Vue {
         });
       }
 
+      handleSearch() {
+        
+        if (this.searchText.trim().length != 0) {
+          this.tableData = this.tableData.filter((d:any) => {
+            
+            if(d.roomName == this.searchText) {
+              return d;
+            }
+          });
+        }
+
+        // console.warn(this.tableData);
+      }
+
     
     
 
-      tableData:Object =  [{
+      tableData:Object[] =  [{
         floorAlias: '第二层',
         roomName: '223',
         peopleNum: 4,

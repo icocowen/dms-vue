@@ -11,6 +11,7 @@ import Echarts from 'echarts';
 
 
 
+
 Vue.prototype.$echarts = Echarts;
 
 Vue.use(VueWechatTitle)

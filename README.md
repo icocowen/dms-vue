@@ -3,7 +3,7 @@
 </p>
 
 ### 介绍 
-由vue搭建的、宿舍管理系统。这个是另一个[spring boot项目](https://github.com/icocowen/dms-spring-boot)的前端app。如果需要运行则需要启动后端项目。
+由vue搭建的、宿舍管理系统。这个是另一个[宿舍管理系统后端](https://github.com/icocowen/dms-spring-boot)的前端app。如果需要运行则需要启动后端项目。
 
 or 👌
 

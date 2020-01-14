@@ -14,6 +14,8 @@ import { Component } from 'vue-property-decorator';
 
 @Component({})
 export default class App extends Vue {
+
+
     mounted() {
      const that = this;
 

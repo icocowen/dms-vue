@@ -168,12 +168,12 @@ router.beforeEach((to, from, next) => {
   // console.warn(to);
   // console.warn(from);
 
-  if (to.meta.requiresAuth) {
-    if(store.state.token == null ||  store.state.token == undefined || store.state.token.length == 0) {
-      next({name: 'login', query: {redirect: to.fullPath} });
-      return;
-    }
-  }
+  // if (to.meta.requiresAuth) {
+  //   if(store.state.token == null ||  store.state.token == undefined || store.state.token.length == 0) {
+  //     next({name: 'login', query: {redirect: to.fullPath} });
+  //     return;
+  //   }
+  // }
 
   next();
   

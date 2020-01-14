@@ -1,0 +1,32 @@
+<template>
+  <el-dialog :title="title" 
+    :visible.sync="showDialog"
+    :close-on-click-modal="false"
+    width="30%"
+    >
+    <el-form :model="dormInfo">
+        <el-form-item label="选择楼层" label-width="80">
+            <el-cascader :options="options" clearable></el-cascader>
+        </el-form-item>
+    </el-form>
+    <div slot="footer" class="dialog-footer">
+        <el-button @click="showDialog = false">取 消</el-button>
+        <el-button type="primary" @click="confirmActive()">确 定</el-button>
+    </div>
+    </el-dialog>
+</template>
+
+<script lang='ts'>
+import Vue from 'vue'
+import {Component} from 'vue-property-decorator'
+
+@Component
+export default class EditRoomInfo extends Vue {
+    
+}
+
+</script>
+
+<style scoped>
+
+</style>

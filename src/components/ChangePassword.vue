@@ -117,9 +117,7 @@ export default class DialogMask extends Vue {
 
  @Watch('visiable')
  public getShowDialog() : void {
-   this.showDialog = true;
-  
-   
+   this.showDialog = true; 
  }
   
   private form = {

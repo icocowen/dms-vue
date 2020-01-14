@@ -18,6 +18,13 @@
           </div> -->
 
           <AdaptHeightTree :height="getTreeHeight" :data='data'/>
+          <DormSetupDialog 
+          :title="title" 
+          :dialogVisible='dialogVisible' 
+          @confirmActive="confirmActive()"
+          :dialogNotVisible='dialogNotVisible'
+          />
+         
          
       </el-col>
       
@@ -38,7 +45,7 @@
           </el-col>
 
           <el-col :span="1">
-            <el-button type="primary" icon="el-icon-plus" size="small" circle></el-button>
+            <el-button type="primary" icon="el-icon-plus" size="small" circle @click="showDialog()"></el-button>
           </el-col>
         </el-row>  
         <el-row style="margin-top: 10px; margin-bottom:10px">
@@ -88,18 +95,19 @@
               </el-table-column>
 
             <el-table-column label="操作" fixed='right' width='150'>
-                  <template slot-scope="scope">
+                  <template>
                     <el-button
                       size="mini"
-                      @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+                     >编辑</el-button>
                     <el-button
                       size="mini"
                       type="danger"
-                      @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+                      >删除</el-button>
                   </template>
               </el-table-column>
 
             </el-table>
+            
           </el-col>
 
 
@@ -107,9 +115,7 @@
 
         <el-row>
           <el-pagination
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          :current-page="currentPage4"
+   
           :page-sizes="[8, 16, 32]"
           :page-size="8"
           layout="total, sizes, prev, pager, next, jumper"
@@ -124,20 +130,48 @@
 import Vue from 'vue'
 import { Prop, Component } from 'vue-property-decorator';
 import AdaptHeightTree from './AdaptHeightTree.vue'
+import DormSetupDialog from './DormSetupDialog.vue'
 
 @Component({
   components: {
-    AdaptHeightTree
+    AdaptHeightTree,
+    DormSetupDialog
   }
 })
 export default class DormSetUp extends Vue {
 
-
+      dialogVisible:any = 1;
+      title: String = "操作提示";
       private loading: boolean = false;
+      dialogNotVisible:any = 2;
 
       currentPage4 = 4;
 
       private input ='';
+
+      showDialog() {
+        this.title = '增加房间';
+        this.dialogVisible = -this.dialogVisible;
+      }
+
+      hiddenDIalog(){
+        this.dialogNotVisible = -this.dialogNotVisible;
+      }
+
+      confirmActive() {
+        this.$confirm('房间设置是否使用默认设置？', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.hiddenDIalog();
+        }).catch(() => {
+
+        });
+      }
+
+    
+    
 
       tableData:Object =  [{
         floorAlias: '第二层',

@@ -168,7 +168,7 @@ export default class DormSetUp extends Vue {
         this.dialogVisible = -this.dialogVisible;
       }
 
-      hiddenDIalog(){
+      hiddenDialog(){
         this.dialogNotVisible = -this.dialogNotVisible;
       }
 
@@ -178,7 +178,7 @@ export default class DormSetUp extends Vue {
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          this.hiddenDIalog();
+          this.hiddenDialog();
         }).catch(() => {
 
         });
